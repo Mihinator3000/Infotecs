@@ -5,7 +5,6 @@ using Infotecs.Dto.Extensions;
 using Infotecs.WebApi.Filters;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
-using Serilog.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 IServiceCollection services = builder.Services;
