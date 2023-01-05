@@ -10,12 +10,14 @@ public class ExceptionFilter : ExceptionFilterAttribute
 {
     public override void OnException(ExceptionContext context)
     {
+        if (context.Exception is CsvParseException)
+        {
+            context.Result = new BadRequestObjectResult(context.Exception.Message);
+            return;
+        }
+
         Log.Error(context.Exception, "Unhandled Exception:");
 
-        context.Result = context.Exception switch
-        {
-            CsvParseException => new BadRequestObjectResult(context.Exception.Message),
-            _ => new StatusCodeResult((int)HttpStatusCode.InternalServerError)
-        };
+        context.Result = new StatusCodeResult((int)HttpStatusCode.InternalServerError);
     }
 }
