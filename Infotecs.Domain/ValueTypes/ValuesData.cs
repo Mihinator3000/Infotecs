@@ -2,4 +2,6 @@
 
 namespace Infotecs.Domain.ValueTypes;
 
-public record struct ValuesData(IReadOnlyCollection<Value> Values, string FileName);
+public readonly record struct ValuesData(
+    IReadOnlyCollection<Value> Values,
+    string FileName);

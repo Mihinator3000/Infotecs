@@ -6,7 +6,7 @@
 - Swagger
 - MS SQL
 - EF Core
-- XUnit
+- XUnit, Moq, AutoFixture
 
 # Приложение представляет из себя WebApi с 3 методами:
 

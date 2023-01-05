@@ -1,4 +1,5 @@
 ﻿using Infotecs.Abstractions.Core.Services;
+using Infotecs.Domain.Exceptions;
 using Infotecs.Dto.Models;
 using Infotecs.Dto.Ranges;
 using Infotecs.WebApi.Extensions;
@@ -34,8 +35,15 @@ public class ResultController : ControllerBase
     [HttpGet("get/by-filename/{fileName}")]
     public async Task<ActionResult<ResultDto>> GetByFileName(string fileName)
     {
-        ResultDto value = await _service.GetByFileName(fileName);
-        return Ok(value);
+        try
+        {
+            ResultDto value = await _service.GetByFileName(fileName);
+            return Ok(value);
+        }
+        catch (EntityNotFoundException e)
+        {
+            return NotFound(e.Message);
+        }
     }
 
     [HttpPost("find/by-min-time-range")]
