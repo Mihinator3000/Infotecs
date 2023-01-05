@@ -20,6 +20,6 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore Infotecs.sln
     - name: Build
-      run: dotnet build Infotecs.sln --configuration Release --no-restore
+      run: dotnet build Infotecs.sln --no-restore
     - name: Test
       run: dotnet test Infotecs.sln --no-build --verbosity normal
