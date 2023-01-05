@@ -10,6 +10,11 @@ public class ResultCalculator : ICalculator<ValuesData, Result>
     {
         IReadOnlyCollection<Value> values = valuesData.Values;
 
+        if (values.Count is 0)
+        {
+            throw new ArgumentException("Value collection is empty");
+        }
+
         DateTime minTime = values.Min(v => v.DateTime);
         TimeSpan allTime = values.Max(v => v.DateTime) - minTime;
 
