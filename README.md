@@ -1,3 +1,5 @@
+![example workflow](https://github.com/Mihinator3000/Infotecs/actions/workflows/test-dotnet.yml/badge.svg)
+
 # Stack
 - .NET 7
 - AspNet Core
