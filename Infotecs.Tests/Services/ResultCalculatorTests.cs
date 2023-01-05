@@ -1,4 +1,5 @@
 ﻿using AutoFixture;
+using FluentAssertions;
 using Infotecs.Abstractions.Core.Providers;
 using Infotecs.Abstractions.Core.Tools;
 using Infotecs.Core.Tools;
@@ -58,7 +59,7 @@ public class ResultCalculatorTests
 
         Result result = _calculator.Calculate(new ValuesData(values, fileName));
 
-        Assert.Equal(medianRate, result.MedianRate);
+        result.MedianRate.Should().Be(medianRate);
     }
 
     [Fact]
@@ -95,7 +96,7 @@ public class ResultCalculatorTests
 
         Result result = _calculator.Calculate(new ValuesData(values, fileName));
 
-        Assert.Equal(medianRate, result.MedianRate);
+        result.MedianRate.Should().Be(medianRate);
     }
 
     [Fact]
@@ -104,8 +105,8 @@ public class ResultCalculatorTests
         string fileName = _fixture.Create<string>();
         IReadOnlyCollection<Value> emptyCollection = Array.Empty<Value>();
 
-        Assert.Throws<ArgumentException>(() =>
-            _calculator.Calculate(new ValuesData(emptyCollection, fileName)));
+        var calculateFunction = () => _calculator.Calculate(new ValuesData(emptyCollection, fileName));
+        calculateFunction.Should().Throw<ArgumentException>();
     }
 
     [Fact]
@@ -117,8 +118,8 @@ public class ResultCalculatorTests
         IReadOnlyCollection<Value> values = _valueGenerator.GenerateCollection(linesCount);
 
         Result result = _calculator.Calculate(new ValuesData(values, fileName));
-        
-        Assert.Equal(fileName, result.FileName);
+
+        result.FileName.Should().Be(fileName);
     }
 
     [Theory]
@@ -133,7 +134,7 @@ public class ResultCalculatorTests
         Result result = _calculator.Calculate(new ValuesData(values, fileName));
         DateTime minTime = values.Min(v => v.DateTime);
 
-        Assert.Equal(minTime, result.MinTime);
+        result.MinTime.Should().Be(minTime);
     }
 
     [Theory]
@@ -148,7 +149,7 @@ public class ResultCalculatorTests
         Result result = _calculator.Calculate(new ValuesData(values, fileName));
         TimeSpan allTime = values.Max(v => v.DateTime) - values.Min(v => v.DateTime);
 
-        Assert.Equal(allTime, result.AllTime);
+        result.AllTime.Should().Be(allTime);
     }
 
     [Theory]
@@ -162,7 +163,7 @@ public class ResultCalculatorTests
         Result result = _calculator.Calculate(new ValuesData(values, fileName));
         double averageTimeInSeconds = values.Average(v => v.TimeInSeconds);
 
-        Assert.Equal(averageTimeInSeconds, result.AverageTimeInSeconds);
+        result.AverageTimeInSeconds.Should().Be(averageTimeInSeconds);
     }
 
     [Theory]
@@ -176,7 +177,7 @@ public class ResultCalculatorTests
         Result result = _calculator.Calculate(new ValuesData(values, fileName));
         double averageRate = values.Average(v => v.Rate);
 
-        Assert.Equal(averageRate, result.AverageRate);
+        result.AverageRate.Should().Be(averageRate);
     }
 
     [Theory]
@@ -192,8 +193,8 @@ public class ResultCalculatorTests
         double minRate = values.Min(v => v.Rate);
         double maxRate = values.Max(v => v.Rate);
 
-        Assert.Equal(minRate, result.MinRate);
-        Assert.Equal(maxRate, result.MaxRate);
+        result.MinRate.Should().Be(minRate);
+        result.MaxRate.Should().Be(maxRate);
     }
 
     [Theory]
@@ -207,6 +208,6 @@ public class ResultCalculatorTests
 
         Result result = _calculator.Calculate(new ValuesData(values, fileName));
 
-        Assert.Equal(linesCount, result.LinesCount);
+        result.LinesCount.Should().Be(linesCount);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using AutoFixture;
 using AutoMapper;
+using FluentAssertions;
 using Infotecs.Domain.Models;
 using Infotecs.Dto.Extensions;
 using Infotecs.Dto.Models;
@@ -36,7 +37,7 @@ public class ConvertersTests
 
         var mappedValueDto = _mapper.Map<ValueDto>(value);
 
-        Assert.Equal(valueDto, mappedValueDto);
+        mappedValueDto.Should().Be(valueDto);
     }
 
     [Fact]
@@ -57,6 +58,6 @@ public class ConvertersTests
 
         var mappedResultDto = _mapper.Map<ResultDto>(result);
 
-        Assert.Equal(resultDto, mappedResultDto);
+        mappedResultDto.Should().Be(resultDto);
     }
 }

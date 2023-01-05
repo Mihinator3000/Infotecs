@@ -1,4 +1,5 @@
 ﻿using AutoFixture;
+using FluentAssertions;
 using Infotecs.Abstractions.Core.Providers;
 using Infotecs.Tests.Tools;
 using Moq;
@@ -59,16 +60,17 @@ public class CsvParserTests
 
         IReadOnlyList<Value> valuesResult = csvParser.Parse(fileData).ToArray();
 
-        Assert.Equal(lineCount, values.Count);
+        lineCount.Should().Be(values.Count);
 
         for (int i = 0; i < lineCount; i++)
         {
             var value = values[i];
             var valueResult = valuesResult[i];
-            Assert.Equal(fileName, valueResult.FileName);
-            Assert.Equal(value.DateTime.Ticks, valueResult.DateTime.Ticks);
-            Assert.Equal(value.TimeInSeconds, valueResult.TimeInSeconds);
-            Assert.Equal(value.Rate, valueResult.Rate);
+
+            valueResult.FileName.Should().Be(fileName);
+            valueResult.DateTime.Should().Be(value.DateTime);
+            valueResult.TimeInSeconds.Should().Be(value.TimeInSeconds);
+            valueResult.Rate.Should().Be(value.Rate);
         }
     }
 
@@ -86,7 +88,8 @@ public class CsvParserTests
 
         var csvParser = new CsvParser(CultureProvider, _passValueValidator);
 
-        Assert.Throws<CsvParseException>(() => csvParser.Parse(fileData));
+        var parserFunction = () => csvParser.Parse(fileData);
+        parserFunction.Should().Throw<CsvParseException>();
     }
 
     [Fact]
@@ -100,7 +103,8 @@ public class CsvParserTests
 
         var csvParser = new CsvParser(CultureProvider, _passValueValidator);
 
-        Assert.Throws<CsvParseException>(() => csvParser.Parse(fileData));
+        var parserFunction = () => csvParser.Parse(fileData);
+        parserFunction.Should().Throw<CsvParseException>();
     }
 
     [Fact]
@@ -115,7 +119,8 @@ public class CsvParserTests
 
         var csvParser = new CsvParser(CultureProvider, _passValueValidator);
 
-        Assert.Throws<CsvParseException>(() => csvParser.Parse(fileData));
+        var parserFunction = () => csvParser.Parse(fileData);
+        parserFunction.Should().Throw<CsvParseException>();
     }
 
     [Fact]
@@ -132,7 +137,8 @@ public class CsvParserTests
 
         var csvParser = new CsvParser(CultureProvider, _passValueValidator);
 
-        Assert.Throws<CsvParseException>(() => csvParser.Parse(fileData));
+        var parserFunction = () => csvParser.Parse(fileData);
+        parserFunction.Should().Throw<CsvParseException>();
     }
 
     [Fact]
@@ -153,6 +159,7 @@ public class CsvParserTests
 
         var csvParser = new CsvParser(CultureProvider, failedValueValidator);
 
-        Assert.Throws<CsvParseException>(() => csvParser.Parse(fileData));
+        var parserFunction = () => csvParser.Parse(fileData);
+        parserFunction.Should().Throw<CsvParseException>();
     }
 }

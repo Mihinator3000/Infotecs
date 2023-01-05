@@ -1,4 +1,5 @@
 ﻿using AutoFixture;
+using FluentAssertions;
 using FluentValidation.TestHelper;
 using Infotecs.Abstractions.Core.Providers;
 using Infotecs.Core.Parsers.Validators;
@@ -42,7 +43,7 @@ public class ValueValidatorTests
         
         var result = _valueValidator.TestValidate(validValue);
 
-        Assert.True(result.IsValid);
+        result.IsValid.Should().BeTrue();
     }
 
     [Fact]
