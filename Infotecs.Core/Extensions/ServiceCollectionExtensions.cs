@@ -27,7 +27,7 @@ public static class ServiceCollectionExtensions
     {
         return services
             .AddScoped<ICsvParser, CsvParser>()
-            .AddScoped<AbstractValidator<Value>, ValueValidator>()
+            .AddScoped<IValidator<Value>, ValueValidator>()
             .AddScoped<ICalculator<ValuesData, Result>, ResultCalculator>()
             .AddScoped<ICsvService, CsvService>()
             .AddScoped<IValueService, ValueService>()

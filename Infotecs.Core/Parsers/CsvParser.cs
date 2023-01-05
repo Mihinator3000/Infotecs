@@ -22,9 +22,9 @@ public class CsvParser : ICsvParser
     private const int MaxLineCount = 10000;
 
     private readonly ICultureProvider _cultureProvider;
-    private readonly AbstractValidator<Value> _valueValidator;
+    private readonly IValidator<Value> _valueValidator;
 
-    public CsvParser(ICultureProvider cultureProvider, AbstractValidator<Value> valueValidator)
+    public CsvParser(ICultureProvider cultureProvider, IValidator<Value> valueValidator)
     {
         _cultureProvider = cultureProvider;
         _valueValidator = valueValidator;
